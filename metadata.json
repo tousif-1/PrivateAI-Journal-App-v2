@@ -1,0 +1,6 @@
+{
+  "name": "Personal Memory & Reflection",
+  "description": "A private personal memory and reflection system with Gemini AI interpretation, life map, open loops, and secure user-owned memory retrieval.",
+  "requestFramePermissions": ["camera", "microphone", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

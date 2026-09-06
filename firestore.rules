@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // User root profile document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // All user-owned subcollections (entries, conversations, media, places, openLoops, bookmarks, reflections, etc.)
+      match /{allSubcollections=**} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Default deny for all other paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

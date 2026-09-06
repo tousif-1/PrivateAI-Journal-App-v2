@@ -1,0 +1,102 @@
+{
+  "$schema": "https://firebase.google.com/schemas/firestore/blueprint/v1.json",
+  "collections": [
+    {
+      "path": "users/{userId}",
+      "description": "User profile and top-level personal metadata",
+      "fields": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "timestamp" },
+        "lastLoginAt": { "type": "timestamp" }
+      }
+    },
+    {
+      "path": "users/{userId}/entries/{entryId}",
+      "description": "Individual personal journal and memory entries with raw text and AI metadata",
+      "fields": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "rawContent": { "type": "string", "description": "Unaltered user-authored text" },
+        "title": { "type": "string" },
+        "createdAt": { "type": "timestamp" },
+        "updatedAt": { "type": "timestamp" },
+        "location": {
+          "type": "map",
+          "fields": {
+            "placeName": { "type": "string" },
+            "placeId": { "type": "string" },
+            "lat": { "type": "number" },
+            "lng": { "type": "number" },
+            "address": { "type": "string" }
+          }
+        },
+        "media": {
+          "type": "array",
+          "description": "Attached photos and videos"
+        },
+        "aiInterpretation": {
+          "type": "map",
+          "description": "Derived metadata marked as AI generated with source reference",
+          "fields": {
+            "summary": { "type": "string" },
+            "emotions": { "type": "array" },
+            "people": { "type": "array" },
+            "places": { "type": "array" },
+            "events": { "type": "array" },
+            "topics": { "type": "array" },
+            "ideas": { "type": "array" },
+            "goals": { "type": "array" },
+            "openLoops": { "type": "array" },
+            "generatedAt": { "type": "timestamp" },
+            "isAiDerived": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    {
+      "path": "users/{userId}/openLoops/{loopId}",
+      "description": "Captured open loops, intentions, and follow-through items",
+      "fields": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "sourceEntryId": { "type": "string" },
+        "title": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      }
+    },
+    {
+      "path": "users/{userId}/bookmarks/{bookmarkId}",
+      "description": "External saved articles, web pages, videos with reactions and reflections",
+      "fields": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "url": { "type": "string" },
+        "title": { "type": "string" },
+        "contentType": { "type": "string" },
+        "reasonForSaving": { "type": "string" },
+        "reactions": { "type": "array" },
+        "summary": { "type": "string" },
+        "userReflection": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      }
+    },
+    {
+      "path": "users/{userId}/reflections/{reflectionId}",
+      "description": "Weekly, monthly, or thematic AI reflection reviews with grounded evidence",
+      "fields": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string" },
+        "periodLabel": { "type": "string" },
+        "content": { "type": "string" },
+        "citations": { "type": "array" },
+        "createdAt": { "type": "timestamp" }
+      }
+    }
+  ]
+}
